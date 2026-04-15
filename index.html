@@ -738,34 +738,60 @@
             }
         });
     </script>
-<script type="module">
-  // Firebase Modules (Core, Analytics, Auth, Database)
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-analytics.js";
-  import { getAuth } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-auth.js";
-  import { getFirestore } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-analytics.js";
+      import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-auth.js";
+      import { getFirestore } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
 
-  // UpnetAI Configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyD5CZZGOr37cwjbNOFAwEK0XdVg-_P0vUw",
-    authDomain: "upnetai-pletform.firebaseapp.com",
-    projectId: "upnetai-pletform",
-    storageBucket: "upnetai-pletform.firebasestorage.app",
-    messagingSenderId: "538671520760",
-    appId: "1:538671520760:web:24e4ad5647877565c6140d",
-    measurementId: "G-891BN679B9"
-  };
+      const firebaseConfig = {
+        apiKey: "AIzaSyD5CZZGOr37cwjbNOFAwEK0XdVg-_P0vUw",
+        authDomain: "upnetai-pletform.firebaseapp.com",
+        projectId: "upnetai-pletform",
+        storageBucket: "upnetai-pletform.firebasestorage.app",
+        messagingSenderId: "538671520760",
+        appId: "1:538671520760:web:24e4ad5647877565c6140d",
+        measurementId: "G-891BN679B9"
+      };
 
-  // Initialize System
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      const db = getFirestore(app);
+      const provider = new GoogleAuthProvider();
 
-  // Testing Pop-up
-  // alert("Success: UpnetAI Database is Connected! 🚀");
-  console.log("UpnetAI System Online!");
-</script>
+      const loginBtn = document.getElementById("login-btn");
+
+      // Login/Logout Functionality
+      if(loginBtn) {
+          loginBtn.addEventListener("click", () => {
+              if (loginBtn.innerText.includes("Login")) {
+                  signInWithPopup(auth, provider)
+                  .then((result) => {
+                      console.log("Logged in as:", result.user.displayName);
+                  }).catch((error) => {
+                      alert("Login fail: " + error.message);
+                  });
+              } else {
+                  signOut(auth);
+              }
+          });
+      }
+
+      // Live Status Check
+      onAuthStateChanged(auth, (user) => {
+          if (user) {
+              let name = user.displayName.split(" ")[0];
+              loginBtn.innerText = "Logout (" + name + ")";
+              loginBtn.style.background = "#e0e0e0"; // Silver color when logged in
+              loginBtn.style.color = "#1a1a1a";
+          } else {
+              loginBtn.innerText = "Login";
+              loginBtn.style.background = ""; // Original gold
+              loginBtn.style.color = "";
+          }
+      });
+    </script>
+
 
 </body>
 </html>
