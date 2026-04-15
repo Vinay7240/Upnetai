@@ -780,18 +780,11 @@
                   loginBtn.innerText = "Login";
                   loginBtn.style.background = ""; 
                   loginBtn.style.color = "";
-                  
-                  // Click karne par Google popup kholo aur login ke baad Dashboard bhej do
-                  loginBtn.onclick = () => {
-                      signInWithPopup(auth, provider).then(() => {
-                          window.location.href = "dashboard.html";
-                      }).catch((error) => {
-                          alert("Login fail: " + error.message);
-                      });
-                  };
-              }
-          });
-      }
+                  // Click karne par naye Login page par bhej do
+loginBtn.onclick = () => {
+    window.location.href = "login.html";
+};
+
     </script>
 
 
