@@ -576,17 +576,17 @@
     <script>
         // 1. Loader Animation
         window.addEventListener('load', () => {
-            const loader = document.getElementById('loader');
-            gsap.to(loader, {
-                opacity: 0,
-                duration: 1,
-                delay: 0.5,
-                onComplete: () => {
-                    loader.style.display = 'none';
-                    initAnimations();
-                }
-            });
-        });
+        // Ye code website load hone ka intezar nahi karega, 1.2 second me apne aap hat jayega
+setTimeout(() => {
+    const loader = document.getElementById('loader');
+    if(loader) {
+        loader.style.opacity = '0';
+        setTimeout(() => {
+            loader.style.display = 'none';
+            if(typeof initAnimations === 'function') initAnimations();
+        }, 500);
+    }
+}, 1200); // 1.2 Second fixed time
 
         // 2. Custom Cursor (Glow Effect)
         const cursor = document.getElementById('cursor-glow');
