@@ -1,0 +1,110 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | UpnetAI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #fdfbf7; font-family: 'Outfit', sans-serif; color: #1a1a1a; }
+        .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(212, 175, 55, 0.3); box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <nav class="glass sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-gray-800 flex items-center">
+                <i class="fa-solid fa-crown text-[#d4af37] mr-2"></i>UpnetAI
+            </a>
+            <button id="logout-btn" class="text-sm font-bold bg-red-50 text-red-600 px-4 py-2 rounded-full border border-red-200 hover:bg-red-100 transition-colors">
+                <i class="fa-solid fa-right-from-bracket mr-1"></i> Logout
+            </button>
+        </div>
+    </nav>
+
+    <div id="dashboard-content" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 hidden">
+        
+        <div class="glass rounded-3xl p-8 mb-8 flex flex-col md:flex-row items-center gap-6">
+            <img id="user-photo" src="https://via.placeholder.com/100" alt="Profile" class="w-24 h-24 rounded-full border-4 border-[#d4af37] shadow-lg">
+            <div class="text-center md:text-left">
+                <h1 class="text-3xl font-extrabold text-gray-900">Welcome, <span id="user-name" class="text-[#d4af37]">User</span>!</h1>
+                <p id="user-email" class="text-gray-500 font-medium mt-1">user@email.com</p>
+                <div class="mt-4 inline-block bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full border border-green-200">
+                    <i class="fa-solid fa-check-circle mr-1"></i> Verified Member
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
+                <div class="text-gray-400 mb-2"><i class="fa-solid fa-download text-xl"></i></div>
+                <h3 class="text-2xl font-bold text-gray-800">0</h3>
+                <p class="text-sm text-gray-500 font-medium">Purchased Items</p>
+            </div>
+            <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
+                <div class="text-gray-400 mb-2"><i class="fa-solid fa-wallet text-xl"></i></div>
+                <h3 class="text-2xl font-bold text-gray-800">$0.00</h3>
+                <p class="text-sm text-gray-500 font-medium">Total Spent</p>
+            </div>
+            <div class="bg-[#d4af37] rounded-2xl p-6 shadow-md text-white">
+                <div class="text-white/80 mb-2"><i class="fa-solid fa-star text-xl"></i></div>
+                <h3 class="text-2xl font-bold">Pro Plan</h3>
+                <p class="text-sm text-white/90 font-medium">Upgrade to get 50% off</p>
+            </div>
+        </div>
+
+        <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b border-gray-200 pb-2">My Digital Products</h2>
+        <div class="bg-white rounded-3xl p-10 border border-gray-100 shadow-sm text-center">
+            <div class="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4 border border-gray-200">
+                <i class="fa-solid fa-box-open text-3xl text-gray-300"></i>
+            </div>
+            <h3 class="text-lg font-bold text-gray-800 mb-2">No products found</h3>
+            <p class="text-gray-500 font-medium text-sm mb-6 max-w-md mx-auto">You haven't downloaded or purchased any digital products yet. Start exploring our marketplace!</p>
+            <a href="index.html#products" class="inline-block bg-[#1a1a1a] text-white font-bold px-6 py-3 rounded-full hover:bg-gray-800 transition-colors shadow-md">
+                Explore Market
+            </a>
+        </div>
+    </div>
+
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
+      import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-auth.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyD5CZZGOr37cwjbNOFAwEK0XdVg-_P0vUw",
+        authDomain: "upnetai-pletform.firebaseapp.com",
+        projectId: "upnetai-pletform",
+        storageBucket: "upnetai-pletform.firebasestorage.app",
+        messagingSenderId: "538671520760",
+        appId: "1:538671520760:web:24e4ad5647877565c6140d"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+
+      // Security: Check if user is logged in
+      onAuthStateChanged(auth, (user) => {
+          if (user) {
+              // User logged in hai, data show karo
+              document.getElementById("dashboard-content").classList.remove("hidden");
+              document.getElementById("user-name").innerText = user.displayName;
+              document.getElementById("user-email").innerText = user.email;
+              document.getElementById("user-photo").src = user.photoURL;
+          } else {
+              // User bina login kiye dashboard par aaya hai, wapas index.html bhejo
+              window.location.href = "index.html";
+          }
+      });
+
+      // Logout Function
+      document.getElementById("logout-btn").addEventListener("click", () => {
+          signOut(auth).then(() => {
+              window.location.href = "index.html"; // Logout hone ke baad home page par
+          });
+      });
+    </script>
+</body>
+</html>
