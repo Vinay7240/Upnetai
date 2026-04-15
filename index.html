@@ -778,18 +778,32 @@
       }
 
       // Live Status Check
+            // Live Status Check & Redirect
       onAuthStateChanged(auth, (user) => {
           if (user) {
-              let name = user.displayName.split(" ")[0];
-              loginBtn.innerText = "Logout (" + name + ")";
-              loginBtn.style.background = "#e0e0e0"; // Silver color when logged in
+              // Agar Login hai, toh button ka naam 'Dashboard' kardo aur link badal do
+              loginBtn.innerText = "Go to Dashboard";
+              loginBtn.style.background = "#e0e0e0"; 
               loginBtn.style.color = "#1a1a1a";
+              
+              // Button click hone par dashboard par bhej do
+              loginBtn.onclick = () => {
+                  window.location.href = "dashboard.html";
+              };
           } else {
+              // Agar Logout hai, toh wapas Login dikhao aur popup logic lagao
               loginBtn.innerText = "Login";
-              loginBtn.style.background = ""; // Original gold
+              loginBtn.style.background = ""; 
               loginBtn.style.color = "";
+              
+              loginBtn.onclick = () => {
+                  signInWithPopup(auth, provider).catch((error) => {
+                      alert("Login fail: " + error.message);
+                  });
+              };
           }
       });
+
     </script>
 
 
