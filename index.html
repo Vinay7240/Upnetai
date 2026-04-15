@@ -738,10 +738,10 @@
             }
         });
     </script>
-    <script type="module">
+        <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
       import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-analytics.js";
-      import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-auth.js";
+      import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-auth.js";
       import { getFirestore } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
 
       const firebaseConfig = {
@@ -755,55 +755,43 @@
       };
 
       const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
       const auth = getAuth(app);
       const db = getFirestore(app);
       const provider = new GoogleAuthProvider();
 
       const loginBtn = document.getElementById("login-btn");
 
-      // Login/Logout Functionality
-      if(loginBtn) {
-          loginBtn.addEventListener("click", () => {
-              if (loginBtn.innerText.includes("Login")) {
-                  signInWithPopup(auth, provider)
-                  .then((result) => {
-                      console.log("Logged in as:", result.user.displayName);
-                  }).catch((error) => {
-                      alert("Login fail: " + error.message);
-                  });
+      if (loginBtn) {
+          // Live Status Check & Smart Redirect Logic
+          onAuthStateChanged(auth, (user) => {
+              if (user) {
+                  // User pehle se Login hai
+                  loginBtn.innerText = "Go to Dashboard";
+                  loginBtn.style.background = "#e0e0e0"; 
+                  loginBtn.style.color = "#1a1a1a";
+                  
+                  // Click karne par Dashboard bhej do
+                  loginBtn.onclick = () => {
+                      window.location.href = "dashboard.html";
+                  };
               } else {
-                  signOut(auth);
+                  // User Login nahi hai
+                  loginBtn.innerText = "Login";
+                  loginBtn.style.background = ""; 
+                  loginBtn.style.color = "";
+                  
+                  // Click karne par Google popup kholo aur login ke baad Dashboard bhej do
+                  loginBtn.onclick = () => {
+                      signInWithPopup(auth, provider).then(() => {
+                          window.location.href = "dashboard.html";
+                      }).catch((error) => {
+                          alert("Login fail: " + error.message);
+                      });
+                  };
               }
           });
       }
-
-      // Live Status Check
-            // Live Status Check & Redirect
-      onAuthStateChanged(auth, (user) => {
-          if (user) {
-              // Agar Login hai, toh button ka naam 'Dashboard' kardo aur link badal do
-              loginBtn.innerText = "Go to Dashboard";
-              loginBtn.style.background = "#e0e0e0"; 
-              loginBtn.style.color = "#1a1a1a";
-              
-              // Button click hone par dashboard par bhej do
-              loginBtn.onclick = () => {
-                  window.location.href = "dashboard.html";
-              };
-          } else {
-              // Agar Logout hai, toh wapas Login dikhao aur popup logic lagao
-              loginBtn.innerText = "Login";
-              loginBtn.style.background = ""; 
-              loginBtn.style.color = "";
-              
-              loginBtn.onclick = () => {
-                  signInWithPopup(auth, provider).catch((error) => {
-                      alert("Login fail: " + error.message);
-                  });
-              };
-          }
-      });
-
     </script>
 
 
