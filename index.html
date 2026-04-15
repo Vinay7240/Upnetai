@@ -413,7 +413,7 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class= id= "products-container" "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 <div class="bg-white rounded-xl overflow-hidden group border border-gold/20 shadow-md hover:shadow-[0_10px_25px_rgba(212,175,55,0.15)] transition-all gs-reveal-up">
                     <div class="h-48 bg-[url('https://images.unsplash.com/photo-1618477247222-ac60cebdf2f5?auto=format&fit=crop&q=80')] bg-cover bg-center relative">
                         <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-300"></div>
@@ -671,36 +671,68 @@ function initAnimations() {
         });
     </script>
             <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
-      import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-auth.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-auth.js";
+  import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
 
-      const firebaseConfig = {
-        apiKey: "AIzaSyD5CZZGOr37cwjbNOFAwEK0XdVg-_P0vUw",
-        authDomain: "upnetai-pletform.firebaseapp.com",
-        projectId: "upnetai-pletform",
-        storageBucket: "upnetai-pletform.firebasestorage.app",
-        messagingSenderId: "538671520760",
-        appId: "1:538671520760:web:24e4ad5647877565c6140d"
-      };
+  const firebaseConfig = {
+    apiKey: "AIzaSyD5CZZGOr37cwjbNOFAwEK0XdVg-_P0vUw",
+    authDomain: "upnetai-pletform.firebaseapp.com",
+    projectId: "upnetai-pletform",
+    storageBucket: "upnetai-pletform.firebasestorage.app",
+    messagingSenderId: "538671520760",
+    appId: "1:538671520760:web:24e4ad5647877565c6140d"
+  };
 
-      const app = initializeApp(firebaseConfig);
-      const auth = getAuth(app);
-      const loginBtn = document.getElementById("login-btn");
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
 
-      if (loginBtn) {
-          onAuthStateChanged(auth, (user) => {
-              if (user) {
-                  // लॉगिन है तो डैशबोर्ड पर भेजो
-                  loginBtn.innerText = "Go to Dashboard";
-                  loginBtn.onclick = () => { window.location.href = "dashboard.html"; };
-              } else {
-                  // लॉगिन नहीं है तो लॉगिन पेज पर भेजो
-                  loginBtn.innerText = "Login / Sign Up";
-                  loginBtn.onclick = () => { window.location.href = "login.html"; };
-              }
-          });
-      }
-    </script>
+  // --- असली प्रोडक्ट्स लोड करने का मैजिक कोड ---
+  async function loadProducts() {
+      const container = document.getElementById("products-container");
+      const q = query(collection(db, "products"), orderBy("createdAt", "desc"));
+      const querySnapshot = await getDocs(q);
+      
+      container.innerHTML = ""; // पुराने डमी डेटा को साफ़ करें
+
+      querySnapshot.forEach((doc) => {
+          const p = doc.data();
+          container.innerHTML += `
+            <div class="bg-white rounded-xl overflow-hidden group border border-gold/20 shadow-md hover:shadow-xl transition-all">
+                <div class="h-48 bg-cover bg-center relative" style="background-image: url('${p.image}')">
+                    <div class="absolute top-3 right-3 bg-white/90 text-gold-dark text-xs font-extrabold px-3 py-1 rounded">${p.category}</div>
+                </div>
+                <div class="p-5">
+                    <h4 class="text-lg font-extrabold text-gray-900 mb-1">${p.name}</h4>
+                    <p class="text-xs text-gray-500 mb-4 line-clamp-2">${p.description}</p>
+                    <div class="flex items-center justify-between pt-3 border-t">
+                        <span class="text-gold-dark font-extrabold text-lg">$${p.price}</span>
+                        <a href="${p.link}" target="_blank" class="text-xs bg-gray-100 border hover:bg-gold hover:text-white px-4 py-2 rounded font-bold transition-all">Download</a>
+                    </div>
+                </div>
+            </div>
+          `;
+      });
+  }
+
+  // पेज लोड होते ही प्रोडक्ट्स दिखाओ
+  loadProducts();
+
+  // लॉगिन बटन का पुराना लॉजिक वैसे ही रहेगा...
+  const loginBtn = document.getElementById("login-btn");
+  if (loginBtn) {
+      onAuthStateChanged(auth, (user) => {
+          if (user) {
+              loginBtn.innerText = "Go to Dashboard";
+              loginBtn.onclick = () => { window.location.href = "dashboard.html"; };
+          } else {
+              loginBtn.innerText = "Login / Sign Up";
+              loginBtn.onclick = () => { window.location.href = "login.html"; };
+          }
+      });
+  }
+</script>
 
 </body>
 </html>
