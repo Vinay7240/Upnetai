@@ -3,131 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UpnetAI | Smart Dashboard</title>
+    <title>UpnetAI | Advanced Control Center</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
     <style>
-        body { background-color: #f8f9fa; font-family: 'Outfit', sans-serif; }
-        .sidebar { background: #1a1a1a; transition: all 0.3s ease; }
-        .glass-card { background: white; border: 1px solid rgba(212, 175, 55, 0.2); box-shadow: 0 10px 30px rgba(0,0,0,0.03); border-radius: 24px; }
-        .gold-gradient { background: linear-gradient(135deg, #d4af37, #b8860b); }
+        body { background-color: #fcfaf6; font-family: 'Outfit', sans-serif; overflow-x: hidden; }
+        .sidebar { background: #121212; transition: all 0.3s ease; }
+        .glass-card { background: white; border: 1px solid rgba(212, 175, 55, 0.15); box-shadow: 0 10px 40px rgba(0,0,0,0.02); border-radius: 28px; transition: transform 0.3s; }
+        .glass-card:hover { transform: translateY(-5px); }
+        .gold-gradient { background: linear-gradient(135deg, #d4af37, #f1c40f); }
+        .status-dot { animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
     </style>
 </head>
 <body class="flex flex-col md:flex-row min-h-screen">
 
-    <div class="md:hidden bg-[#1a1a1a] text-white p-4 flex justify-between items-center">
-        <span class="text-xl font-bold font-serif text-[#d4af37]">UpnetAI</span>
-        <button id="mobile-menu-btn" class="text-2xl"><i class="fa-solid fa-bars"></i></button>
-    </div>
-
-    <aside id="sidebar" class="sidebar w-full md:w-64 text-white flex-col hidden md:flex">
+    <aside id="sidebar" class="sidebar w-full md:w-72 text-white flex-col hidden md:flex sticky top-0 h-screen">
         <div class="p-8 text-center border-b border-gray-800">
-            <h1 class="text-2xl font-bold font-serif tracking-widest text-[#d4af37]">UPNETAI</h1>
-            <p class="text-[10px] uppercase tracking-tighter text-gray-400 mt-1">Tech Business Expert</p>
+            <h1 class="text-3xl font-black tracking-tighter text-[#d4af37]">UPNET<span class="text-white">AI</span></h1>
+            <div class="inline-block px-3 py-1 bg-[#d4af37]/10 rounded-full mt-2">
+                <p class="text-[10px] font-bold uppercase tracking-widest text-[#d4af37]">Premium Member Area</p>
+            </div>
         </div>
-        <nav class="flex-grow p-4 space-y-2">
-            <a href="index.html" class="flex items-center p-3 rounded-xl hover:bg-gray-800 transition-all">
-                <i class="fa-solid fa-house mr-3 text-[#d4af37]"></i> Home
+        
+        <nav class="flex-grow p-6 space-y-3">
+            <a href="index.html" class="flex items-center p-4 rounded-2xl hover:bg-white/5 transition-all text-gray-400 hover:text-[#d4af37]">
+                <i class="fa-solid fa-house-chimney mr-3"></i> Home
             </a>
-            <a href="#" class="flex items-center p-3 rounded-xl bg-gray-800 border-l-4 border-[#d4af37]">
-                <i class="fa-solid fa-gauge mr-3 text-[#d4af37]"></i> Dashboard
+            <a href="#" class="flex items-center p-4 rounded-2xl bg-[#d4af37] text-black font-bold shadow-lg shadow-[#d4af37]/20">
+                <i class="fa-solid fa-chart-pie mr-3"></i> Dashboard
             </a>
-            <a href="index.html#products" class="flex items-center p-3 rounded-xl hover:bg-gray-800 transition-all text-gray-300">
-                <i class="fa-solid fa-shop mr-3"></i> Marketplace
+            <a href="index.html#products" class="flex items-center p-4 rounded-2xl hover:bg-white/5 transition-all text-gray-400">
+                <i class="fa-solid fa-bag-shopping mr-3"></i> Marketplace
             </a>
-            <a href="#" class="flex items-center p-3 rounded-xl hover:bg-gray-800 transition-all text-gray-300">
-                <i class="fa-solid fa-folder-open mr-3"></i> My Products
+            <a href="#" class="flex items-center p-4 rounded-2xl hover:bg-white/5 transition-all text-gray-400">
+                <i class="fa-solid fa-box-open mr-3"></i> My Purchases
+            </a>
+            <a href="#" class="flex items-center p-4 rounded-2xl hover:bg-white/5 transition-all text-gray-400">
+                <i class="fa-solid fa-headset mr-3"></i> Tech Support
             </a>
         </nav>
+
         <div class="p-6 border-t border-gray-800">
-            <button id="logout-btn" class="w-full bg-red-600/10 text-red-500 font-bold py-3 rounded-xl border border-red-600/20 hover:bg-red-600 hover:text-white transition-all">
-                <i class="fa-solid fa-sign-out mr-2"></i> Logout
+            <button id="logout-btn" class="w-full group bg-red-500/5 hover:bg-red-500 text-red-500 hover:text-white font-bold py-4 rounded-2xl border border-red-500/20 transition-all duration-300">
+                <i class="fa-solid fa-power-off mr-2 group-hover:rotate-90 transition-transform"></i> Logout
             </button>
         </div>
     </aside>
 
-    <main class="flex-grow p-4 md:p-10">
-        
-        <header class="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
+    <main class="flex-grow p-6 md:p-12">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6">
             <div>
-                <h2 class="text-3xl font-extrabold text-gray-900">User <span class="text-[#d4af37]">Control Center</span></h2>
-                <p class="text-gray-500 font-medium">Manage your digital assets and account</p>
+                <h2 class="text-4xl font-black text-gray-900 leading-tight">Welcome, <span id="welcome-name" class="text-[#d4af37]">User</span>!</h2>
+                <p class="text-gray-500 font-medium">System status: <span class="text-green-600 font-bold italic">All systems operational</span></p>
             </div>
-            <div class="flex items-center gap-4 bg-white p-2 pr-6 rounded-full shadow-sm border border-gray-100">
-                <img id="user-photo" src="https://via.placeholder.com/50" class="w-12 h-12 rounded-full border-2 border-[#d4af37]">
+            
+            <div class="flex items-center gap-4 bg-white p-3 pr-8 rounded-3xl shadow-xl shadow-black/5 border border-gray-100">
+                <div class="relative">
+                    <img id="user-photo" src="https://via.placeholder.com/60" class="w-14 h-14 rounded-2xl object-cover border-2 border-[#d4af37]">
+                    <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-white rounded-full status-dot"></div>
+                </div>
                 <div>
-                    <p id="user-name" class="font-bold text-gray-800 leading-tight">Loading...</p>
-                    <p class="text-xs text-green-500 font-bold uppercase tracking-widest"><i class="fa-solid fa-circle text-[6px] mr-1"></i> Online</p>
-                </div>
-            </div>
-        </header>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-            <div class="glass-card p-6 flex items-center justify-between">
-                <div>
-                    <p class="text-gray-400 text-sm font-bold uppercase mb-1">Downloads</p>
-                    <h4 class="text-3xl font-black text-gray-800">12</h4>
-                </div>
-                <div class="w-12 h-12 gold-gradient rounded-2xl flex items-center justify-center text-white text-xl shadow-lg shadow-gold/20">
-                    <i class="fa-solid fa-cloud-arrow-down"></i>
-                </div>
-            </div>
-            <div class="glass-card p-6 flex items-center justify-between">
-                <div>
-                    <p class="text-gray-400 text-sm font-bold uppercase mb-1">Account Rank</p>
-                    <h4 class="text-3xl font-black text-gray-800">Elite</h4>
-                </div>
-                <div class="w-12 h-12 bg-gray-900 rounded-2xl flex items-center justify-center text-white text-xl">
-                    <i class="fa-solid fa-crown text-[#d4af37]"></i>
-                </div>
-            </div>
-            <div class="glass-card p-6 flex items-center justify-between">
-                <div>
-                    <p class="text-gray-400 text-sm font-bold uppercase mb-1">Credits</p>
-                    <h4 class="text-3xl font-black text-gray-800">Free</h4>
-                </div>
-                <div class="w-12 h-12 bg-blue-500 rounded-2xl flex items-center justify-center text-white text-xl">
-                    <i class="fa-solid fa-wallet"></i>
+                    <p id="user-name" class="font-black text-gray-900 text-lg leading-none">Loading...</p>
+                    <p id="display-id" class="text-[11px] font-bold text-gray-400 mt-1 uppercase tracking-widest">ID: #724063</p>
                 </div>
             </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            <div class="glass-card p-8 relative overflow-hidden">
+                <div class="relative z-10">
+                    <p class="text-gray-400 text-xs font-black uppercase tracking-widest mb-2">Total Orders</p>
+                    <h4 id="order-count" class="text-5xl font-black text-gray-900">0</h4>
+                    <p class="text-green-500 text-xs font-bold mt-2"><i class="fa-solid fa-arrow-up mr-1"></i> Real-time Updated</p>
+                </div>
+                <i class="fa-solid fa-cart-shopping absolute -right-4 -bottom-4 text-8xl text-gray-50 opacity-[0.05]"></i>
+            </div>
+
+            <div class="glass-card p-8 relative overflow-hidden border-b-4 border-b-[#d4af37]">
+                <div class="relative z-10">
+                    <p class="text-gray-400 text-xs font-black uppercase tracking-widest mb-2">Member Status</p>
+                    <h4 class="text-4xl font-black text-gray-900">Premium</h4>
+                    <p class="text-[#d4af37] text-xs font-bold mt-2"><i class="fa-solid fa-shield-halved mr-1"></i> Account Protected</p>
+                </div>
+                <i class="fa-solid fa-crown absolute -right-4 -bottom-4 text-8xl text-[#d4af37] opacity-[0.05]"></i>
+            </div>
+
+            <div class="glass-card p-8 bg-gray-900 text-white border-none shadow-2xl shadow-[#d4af37]/20">
+                <p class="text-gray-400 text-xs font-black uppercase tracking-widest mb-2">Wallet Balance</p>
+                <h4 class="text-5xl font-black text-[#d4af37]">$0.00</h4>
+                <button class="mt-4 text-[10px] font-bold bg-white/10 hover:bg-[#d4af37] hover:text-black px-4 py-2 rounded-full transition-all">ADD FUNDS</button>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-2 glass-card p-10">
+                <div class="flex justify-between items-center mb-8">
+                    <h3 class="text-2xl font-black text-gray-900 uppercase tracking-tighter">Security Information</h3>
+                    <button class="text-[#d4af37] font-bold text-sm hover:underline">Update Profile</button>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="p-6 bg-gray-50 rounded-2xl border border-gray-100">
+                        <p class="text-xs font-bold text-gray-400 uppercase mb-1">Registered Email</p>
+                        <p id="user-email" class="font-bold text-gray-800 break-all">...</p>
+                    </div>
+                    <div class="p-6 bg-gray-50 rounded-2xl border border-gray-100">
+                        <p class="text-xs font-bold text-gray-400 uppercase mb-1">Unique User Hash</p>
+                        <p id="user-hash" class="font-mono text-[10px] text-gray-400">...</p>
+                    </div>
+                </div>
+                
+                <div class="mt-10 p-6 rounded-3xl bg-amber-50 border border-amber-100 flex items-start">
+                    <div class="w-10 h-10 bg-amber-200 rounded-full flex items-center justify-center text-amber-700 mr-4 shrink-0">
+                        <i class="fa-solid fa-lightbulb"></i>
+                    </div>
+                    <div>
+                        <p class="font-bold text-amber-900 text-sm">Quick Tip</p>
+                        <p class="text-amber-700 text-xs mt-1 leading-relaxed">Keep your UpnetAI User ID private. This ID is used for priority tech support and manual government document services.</p>
+                    </div>
+                </div>
+            </div>
+
             <div class="glass-card p-8">
-                <h3 class="text-xl font-bold text-gray-800 mb-6 flex items-center">
-                    <i class="fa-solid fa-user-gear mr-2 text-[#d4af37]"></i> Profile Details
-                </h3>
-                <div class="space-y-4">
-                    <div class="flex justify-between border-b pb-3">
-                        <span class="text-gray-500 font-medium">Email Address</span>
-                        <span id="user-email" class="text-gray-800 font-bold">...</span>
-                    </div>
-                    <div class="flex justify-between border-b pb-3">
-                        <span class="text-gray-500 font-medium">Account ID</span>
-                        <span id="user-id" class="text-xs text-gray-400 font-mono">...</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <span class="text-gray-500 font-medium">Member Since</span>
-                        <span class="text-gray-800 font-bold">April 2026</span>
+                <h3 class="text-xl font-black text-gray-900 mb-6 uppercase tracking-tighter">Activity Log</h3>
+                <div id="activity-list" class="space-y-6">
+                    <div class="flex items-center">
+                        <div class="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
+                        <div>
+                            <p class="text-xs font-bold text-gray-800 leading-none">Successful Login</p>
+                            <p class="text-[10px] text-gray-400 mt-1">Just Now • System</p>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <div class="glass-card p-8 bg-gray-900 text-white border-none">
-                <h3 class="text-xl font-bold mb-4 flex items-center text-[#d4af37]">
-                    <i class="fa-solid fa-bullhorn mr-2"></i> Platform News
-                </h3>
-                <p class="text-gray-400 mb-6 text-sm">Welcome Vinay! We are adding 500+ new AI agents and scripts this weekend. Stay tuned for the biggest drop of 2026.</p>
-                <button class="w-full gold-gradient text-white font-bold py-3 rounded-xl shadow-lg">View Changelog</button>
-            </div>
         </div>
-
     </main>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyD5CZZGOr37cwjbNOFAwEK0XdVg-_P0vUw",
@@ -140,29 +159,77 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        const db = getFirestore(app);
 
-        // Security & Data Fetch
-        onAuthStateChanged(auth, (user) => {
+        // Success Notification Function
+        function showSuccess(msg) {
+            Toastify({
+                text: "✔️ " + msg,
+                duration: 4000,
+                gravity: "top",
+                position: "right",
+                style: { background: "linear-gradient(to right, #00b09b, #96c93d)", borderRadius: "15px", fontWeight: "bold" }
+            }).showToast();
+        }
+
+        onAuthStateChanged(auth, async (user) => {
             if (user) {
-                document.getElementById("user-name").innerText = user.displayName || "Elite Member";
+                // UI Basic Update
+                document.getElementById("user-name").innerText = user.displayName || "Elite User";
+                document.getElementById("welcome-name").innerText = user.displayName?.split(' ')[0] || "User";
                 document.getElementById("user-email").innerText = user.email;
-                document.getElementById("user-id").innerText = user.uid.substring(0, 15) + "...";
-                document.getElementById("user-photo").src = user.photoURL || "https://ui-avatars.com/api/?name=" + user.displayName;
+                document.getElementById("user-hash").innerText = user.uid;
+                document.getElementById("user-photo").src = user.photoURL || `https://ui-avatars.com/api/?name=${user.displayName}&background=d4af37&color=fff`;
+
+                // Logic for Unique ID (724063 sequence)
+                const userRef = doc(db, "users", user.uid);
+                const userSnap = await getDoc(userRef);
+
+                if (userSnap.exists()) {
+                    const userData = userSnap.data();
+                    document.getElementById("display-id").innerText = "ID: #" + userData.customID;
+                    document.getElementById("order-count").innerText = userData.purchasedOrders || 0;
+                } else {
+                    // Get total users to increment ID
+                    const metaRef = doc(db, "system", "metadata");
+                    const metaSnap = await getDoc(metaRef);
+                    let lastID = 724062; // Base ID - 1
+
+                    if (metaSnap.exists()) {
+                        lastID = metaSnap.data().lastID;
+                    }
+
+                    const newID = lastID + 1;
+                    
+                    // Save new user data
+                    await setDoc(userRef, {
+                        customID: newID,
+                        purchasedOrders: 0,
+                        email: user.email,
+                        createdAt: new Date()
+                    });
+
+                    // Update system counter
+                    await setDoc(metaRef, { lastID: newID });
+
+                    document.getElementById("display-id").innerText = "ID: #" + newID;
+                    showSuccess("Account Successfully Initialized!");
+                }
+                
+                showSuccess("System Synced Successfully");
+
             } else {
                 window.location.href = "login.html";
             }
         });
 
-        // Logout
+        // Logout Process
         document.getElementById("logout-btn").addEventListener("click", () => {
-            signOut(auth).then(() => { window.location.href = "index.html"; });
+            signOut(auth).then(() => {
+                window.location.href = "index.html";
+            });
         });
-
-        // Mobile Menu Toggle
-        const menuBtn = document.getElementById("mobile-menu-btn");
-        const sidebar = document.getElementById("sidebar");
-        menuBtn.onclick = () => { sidebar.classList.toggle("hidden"); sidebar.classList.toggle("flex"); };
     </script>
 </body>
 </html>
-                                                                        
+                                                                                                              
