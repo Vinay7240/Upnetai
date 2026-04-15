@@ -574,43 +574,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
     <script>
-        // 1. Loader Animation
-        window.addEventListener('load', () => {
         
-     // 1. Loader को 'Smart' और 'Fast' बनाने का फंक्शन
-        function hideLoader() {
-            const loader = document.getElementById('loader');
-            if (loader) {
-                loader.style.opacity = '0';
-                setTimeout(() => {
-                    loader.style.display = 'none';
-                    // लोडर हटने के बाद एनिमेशन शुरू करें
-                    if (typeof initAnimations === 'function') initAnimations();
-                }, 500); // 0.5 सेकंड का फेड-आउट इफेक्ट
-            }
-        }
-
-        // 2. वेबसाइट जैसे ही पूरी लोड हो, लोडर हटा दो
-        window.addEventListener('load', hideLoader);
-
-        // 3. SAFETY TIMER (सबसे ज़रूरी): 
-        // अगर इंटरनेट स्लो है और 2.5 सेकंड में पेज लोड नहीं हुआ, 
-        // तो भी लोडर को जबरदस्ती हटा दो ताकि यूज़र को वेबसाइट दिख जाए।
-        setTimeout(hideLoader, 2500);
-
-        // --- बाकी पुराने फंक्शंस ---
-        const cursor = document.getElementById('cursor-glow');
-        document.addEventListener('mousemove', (e) => { 
-            if(cursor) cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`; 
-        });
-
-        function initAnimations() {
-            if (typeof gsap !== 'undefined') {
-                gsap.utils.toArray('.gs-reveal-up').forEach(el => {
-                    gsap.fromTo(el, { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 1, scrollTrigger: { trigger: el, start: "top 85%" } });
-                });
-            }
-        }
     
 
 
