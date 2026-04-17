@@ -1,11 +1,12 @@
- <!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Command Center | UpnetAI</title>
+    <title>UpnetAI | Advanced Command Center v3.0</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -17,7 +18,8 @@
             theme: {
                 extend: {
                     fontFamily: { sans: ['Outfit', 'sans-serif'], mono: ['Space Grotesk', 'monospace'] },
-                    colors: { gold: '#d4af37', dark: '#0a0a0a', panel: '#151515' }
+                    colors: { gold: '#d4af37', dark: '#0a0a0a', panel: '#151515', cyber: '#00f2fe' },
+                    boxShadow: { 'neon-gold': '0 0 20px rgba(212, 175, 55, 0.3)', 'neon-gold-inner': 'inset 0 0 10px rgba(212, 175, 55, 0.1)' }
                 }
             }
         }
@@ -26,200 +28,263 @@
     <style>
         body { background-color: #050505; color: #ffffff; overflow-x: hidden; }
         
-        /* Animated Cyber Grid Background */
+        /* Premium Background Noise */
+        body::before {
+            content: ""; position: fixed; inset: 0;
+            background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3%3Cfilter id="noiseFilter"%3%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3%3C/filter%3%3Crect width="100%" height="100%" filter="url(%23noiseFilter)"/%3%3C/svg%3%3E');
+            opacity: 0.03; pointer-events: none; z-index: -3;
+        }
+
+        /* Animated Cyber Grid (High Quality) */
         .cyber-grid {
             position: fixed; inset: 0; z-index: -2;
             background-image: 
                 linear-gradient(rgba(212, 175, 55, 0.05) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(212, 175, 55, 0.05) 1px, transparent 1px);
-            background-size: 40px 40px;
-            transform: perspective(500px) rotateX(60deg) translateY(-100px) translateZ(-200px);
-            animation: gridMove 20s linear infinite;
+            background-size: 50px 50px;
+            transform: perspective(1000px) rotateX(60deg) translateY(-100px) translateZ(-300px);
+            animation: gridMove 30s linear infinite;
         }
-        @keyframes gridMove { 0% { background-position: 0 0; } 100% { background-position: 0 40px; } }
+        @keyframes gridMove { 0% { background-position: 0 0; } 100% { background-position: 0 50px; } }
 
-        /* Glowing Orbs */
-        .glow-orb { position: fixed; border-radius: 50%; filter: blur(120px); z-index: -1; opacity: 0.4; animation: pulse 8s alternate infinite; }
-        .orb-1 { width: 400px; height: 400px; background: #d4af37; top: -10%; left: -10%; }
-        .orb-2 { width: 300px; height: 300px; background: #b8860b; bottom: -10%; right: -10%; animation-delay: -4s; }
+        /* Floating Luxury Orbs (3D Animated) */
+        .glow-orb { position: fixed; border-radius: 50%; filter: blur(120px); z-index: -1; opacity: 0.4; animation: orbPulse 10s alternate infinite; }
+        .orb-1 { width: 400px; height: 400px; background: radial-gradient(circle, #d4af37 0%, transparent 70%); top: -10%; left: -10%; }
+        .orb-2 { width: 300px; height: 300px; background: radial-gradient(circle, #b8860b 0%, transparent 70%); bottom: -10%; right: -10%; animation-delay: -5s; }
 
-        @keyframes pulse { 0% { transform: scale(1); opacity: 0.3; } 100% { transform: scale(1.5); opacity: 0.6; } }
+        @keyframes orbPulse { 0% { transform: scale(1) translate(0, 0); opacity: 0.3; } 100% { transform: scale(1.4) translate(50px, 50px); opacity: 0.6; } }
 
-        /* Dark Glassmorphism */
+        /* Dark Glassmorphism Container */
         .glass-panel {
-            background: rgba(20, 20, 20, 0.6);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(212, 175, 55, 0.15);
-            border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s;
+            background: rgba(18, 18, 18, 0.6);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(212, 175, 55, 0.12);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.7), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s, box-shadow 0.3s;
         }
-        .glass-panel:hover { border-color: rgba(212, 175, 55, 0.4); }
+        .glass-panel:hover { border-color: rgba(212, 175, 55, 0.4); box-shadow: 0 20px 60px rgba(212, 175, 55, 0.1); }
 
-        /* 3D Form Inputs */
+        /* Powerful Form Inputs */
         .tech-input {
             background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            color: #fff; font-family: 'Space Grotesk', monospace;
             transition: all 0.3s;
-            box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.5);
         }
         .tech-input:focus {
             border-color: #d4af37;
-            background: rgba(212, 175, 55, 0.05);
-            box-shadow: inset 0 2px 10px rgba(0,0,0,0.5), 0 0 15px rgba(212, 175, 55, 0.2);
+            background: rgba(212, 175, 55, 0.04);
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.5), 0 0 15px rgba(212, 175, 55, 0.2);
             outline: none;
         }
+        .tech-input::placeholder { color: rgba(255,255,255,0.3); font-weight: normal; }
 
-        /* Security Gate Overlay */
+        /* 3D Security Gate Overlay (Rolling Code Cipher Effect) */
         #admin-gate {
-            backdrop-filter: blur(30px); background: rgba(5,5,5,0.95);
+            backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); background: rgba(3,3,3,0.98);
         }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
+        /* Animated Cipher Text */
+        .cipher-text { font-family: 'Space Grotesk', monospace; }
+        @keyframes cipher { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+        .cipher-char { animation: cipher 0.1s infinite; }
+
+        /* Button Powerful Hover */
+        .powerful-btn {
+            position: relative; overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.3s;
+        }
+        .powerful-btn::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: translateX(-100%); transition: transform 0.6s;
+        }
+        .powerful-btn:hover { transform: scale(1.02); box-shadow: 0 0 30px rgba(212, 175, 55, 0.4); }
+        .powerful-btn:hover::after { transform: translateX(100%); }
+
+        /* Sidebar Glass Highlight */
+        .nav-link.active {
+            background: linear-gradient(90deg, rgba(212, 175, 55, 0.15), transparent);
+            border-left: 3px solid #d4af37; font-weight: bold;
+        }
+
+        /* Custom Scrollbar (Invisible but functional) */
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
         ::-webkit-scrollbar-track { background: #0a0a0a; }
         ::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 10px; }
     </style>
 </head>
-<body class="flex h-screen overflow-hidden">
+<body class="flex h-screen overflow-hidden antialiased">
 
     <div class="cyber-grid"></div>
     <div class="glow-orb orb-1"></div>
     <div class="glow-orb orb-2"></div>
 
-    <div id="admin-gate" class="fixed inset-0 z-50 flex flex-col items-center justify-center transition-opacity duration-500">
-        <div class="relative w-32 h-32 mb-8 flex items-center justify-center">
-            <div class="absolute inset-0 border-t-4 border-[#d4af37] rounded-full animate-spin"></div>
-            <div class="absolute inset-2 border-b-4 border-white rounded-full animate-[spin_2s_reverse_infinite]"></div>
-            <i class="fa-solid fa-fingerprint text-5xl text-[#d4af37] animate-pulse"></i>
+    <div id="admin-gate" class="fixed inset-0 z-[100] flex flex-col items-center justify-center transition-all duration-700">
+        <div class="relative w-40 h-40 mb-10 flex items-center justify-center">
+            <div class="absolute inset-0 border-2 border-dashed border-[#d4af37]/30 rounded-full animate-[spin_10s_linear_infinite]"></div>
+            <div class="absolute inset-4 border-2 border-white/20 rounded-full animate-[spin_5s_reverse_linear_infinite]"></div>
+            <div class="absolute inset-8 border-4 border-[#d4af37] rounded-full animate-pulse shadow- neon-gold"></div>
+            <i class="fa-solid fa-id-card-clip text-5xl text-white"></i>
         </div>
-        <h1 class="text-3xl font-mono font-bold tracking-widest uppercase text-white mb-2">Authenticating</h1>
-        <p class="text-[#d4af37] text-sm font-bold tracking-[0.3em] uppercase">Secure Connection Initiated</p>
-        <div id="auth-error" class="mt-6 text-red-500 font-bold hidden flex-col items-center">
-            <p><i class="fa-solid fa-triangle-exclamation mr-2"></i>Access Denied. Unauthorized Entity.</p>
-            <a href="login.html" class="mt-4 px-6 py-2 bg-red-900/30 border border-red-500 rounded-lg hover:bg-red-500 transition-colors text-white">Return to Login</a>
+        
+        <div class="text-center font-mono tracking-[0.2em] mb-4">
+            <h1 class="text-3xl font-black text-white">AUTHENTICATING ENTITY</h1>
+            <p id="rolling-cipher" class="text-gold text-sm mt-1 cipher-text">Checking biometric hash... #529E73A</p>
+        </div>
+
+        <div id="auth-error" class="hidden flex-col items-center mt-6">
+            <p class="text-red-500 font-bold text-xl"><i class="fa-solid fa-shield-slash mr-2"></i>Access Denied. Unauthorized Hash.</p>
+            <a href="login.html" class="mt-5 px-8 py-3 bg-red-950/40 border border-red-600 rounded-lg hover:bg-red-600 transition-colors text-white font-bold uppercase tracking-widest text-xs">Return to Terminal</a>
         </div>
     </div>
 
-    <aside class="w-20 md:w-72 glass-panel m-4 flex flex-col justify-between hidden md:flex z-10 relative">
-        <div>
-            <div class="p-8 border-b border-white/5 text-center">
-                <i class="fa-solid fa-crown text-4xl text-gold drop-shadow-[0_0_15px_rgba(212,175,55,0.8)]"></i>
-                <h2 class="text-2xl font-black mt-3 tracking-tighter uppercase hidden md:block">Upnet<span class="text-gold">AI</span></h2>
-                <p class="text-[10px] text-gold tracking-widest font-mono mt-1 hidden md:block">SYS-ADMIN // V1.0</p>
+    <aside id="sidebar" class="w-20 md:w-80 glass-panel m-4 flex flex-col justify-between hidden md:flex z-50 relative border-gold/10 overflow-hidden">
+        <div class="absolute -top-10 -left-10 w-32 h-32 bg-gold/5 rounded-full blur-2xl"></div>
+        
+        <div class="relative z-10">
+            <div class="p-8 border-b border-white/5 text-center relative">
+                <div class="inline-block relative">
+                    <i class="fa-solid fa-crown text-4xl text-gold drop-shadow-[0_0_15px_rgba(212,175,55,0.7)]"></i>
+                </div>
+                <h2 class="text-3xl font-serif font-black mt-3 tracking-tighter uppercase hidden md:block text-white">UPNET<span class="text-gold">AI</span></h2>
+                <div class="inline-block mt-2 bg-gold/10 border border-gold/30 px-3 py-1 rounded-full">
+                    <p class="text-[10px] text-gold tracking-widest font-mono hidden md:block">MASTER_SYSTEM // V3.0</p>
+                </div>
             </div>
-            <nav class="p-4 space-y-2 mt-4">
-                <a href="#" class="flex items-center p-4 rounded-xl bg-gradient-to-r from-gold/20 to-transparent border-l-4 border-gold text-white font-bold">
-                    <i class="fa-solid fa-database w-6 text-gold"></i> <span class="hidden md:block ml-3">Product Matrix</span>
+            
+            <nav class="p-5 space-y-3 mt-5">
+                <a href="#" class="nav-link active flex items-center p-4 rounded-xl text-white">
+                    <i class="fa-solid fa-database w-7 text-gold text-lg"></i> <span class="hidden md:block ml-4 text-sm font-bold uppercase tracking-wider">Product Matrix</span>
                 </a>
-                <a href="index.html" class="flex items-center p-4 rounded-xl hover:bg-white/5 text-gray-400 hover:text-white transition-all">
-                    <i class="fa-solid fa-globe w-6"></i> <span class="hidden md:block ml-3">Live Website</span>
+                <a href="index.html" class="nav-link flex items-center p-4 rounded-xl text-gray-400 hover:text-white hover:bg-white/5 transition-all">
+                    <i class="fa-solid fa-earth-asia w-7 text-lg"></i> <span class="hidden md:block ml-4 text-sm font-medium">Live Marketplace</span>
                 </a>
-                <a href="#" class="flex items-center p-4 rounded-xl hover:bg-white/5 text-gray-400 hover:text-white transition-all">
-                    <i class="fa-solid fa-users-gear w-6"></i> <span class="hidden md:block ml-3">User Control</span>
+                <a href="#" class="nav-link flex items-center p-4 rounded-xl text-gray-400 hover:text-white hover:bg-white/5 transition-all">
+                    <i class="fa-solid fa-users-gear w-7 text-lg"></i> <span class="hidden md:block ml-4 text-sm font-medium">Users Management</span>
+                </a>
+                <a href="#" class="nav-link flex items-center p-4 rounded-xl text-gray-400 hover:text-white hover:bg-white/5 transition-all">
+                    <i class="fa-solid fa-chart-line-up w-7 text-lg"></i> <span class="hidden md:block ml-4 text-sm font-medium">Analytics Engine</span>
                 </a>
             </nav>
         </div>
-        <div class="p-6 border-t border-white/5">
+
+        <div class="p-6 border-t border-white/5 relative z-10 bg-panel/40">
             <div class="flex items-center gap-4">
-                <img src="https://ui-avatars.com/api/?name=Vinay&background=d4af37&color=000" class="w-10 h-10 rounded-full border border-gold shadow-[0_0_10px_rgba(212,175,55,0.5)]">
-                <div class="hidden md:block">
-                    <p class="text-sm font-bold">Vinay CEO</p>
-                    <p class="text-[10px] text-green-400 font-mono"><i class="fa-solid fa-circle text-[6px] mr-1"></i>System Online</p>
+                <div class="relative">
+                    <img src="https://ui-avatars.com/api/?name=Vinay&background=d4af37&color=000&size=64&bold=true" class="w-12 h-12 rounded-full border border-gold shadow-[0_0_15px_rgba(212,175,55,0.4)]">
+                    <div class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-500 rounded-full border-2 border-dark animate-pulse"></div>
                 </div>
+                <div class="hidden md:block flex-1">
+                    <p class="text-lg font-black leading-none text-white">Vinay</p>
+                    <p class="text-xs text-gold font-mono tracking-wider mt-0.5">PLATFORM CEO</p>
+                </div>
+                <a href="dashboard.html" class="hidden md:block text-gray-500 hover:text-gold transition-colors text-lg"><i class="fa-solid fa-cog"></i></a>
             </div>
         </div>
     </aside>
 
-    <main class="flex-1 p-4 md:p-8 overflow-y-auto z-10">
+    <main class="flex-1 p-4 md:p-10 overflow-y-auto z-10 space-y-10 relative">
+        <header class="flex justify-between items-center bg-transparent gs-reveal-up pb-8 border-b border-white/5">
+            <div>
+                <p class="text-gold font-mono text-sm tracking-widest"><i class="fa-solid fa-code-branch mr-1"></i> UPNETAI Matrix deployment</p>
+                <h2 class="text-4xl md:text-5xl font-black text-white leading-none tracking-tighter mt-1">Initialize <span class="text-gold">New Asset</span></h2>
+            </div>
+            <div class="flex items-center gap-3">
+                <div class="text-right font-mono text-gray-500 text-[11px] hidden md:block">
+                    <p>SERVER_LATENCY // 12ms</p>
+                    <p id="system-time">SYNC_TIME // ...</p>
+                </div>
+                <div class="w-12 h-12 glass-panel border-gold/30 rounded-full flex items-center justify-center text-gold relative shadow- neon-gold">
+                    <i class="fa-solid fa-satellite-dish animate-pulse"></i>
+                    <div class="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border border-dark"></div>
+                </div>
+            </div>
+        </header>
         
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-8">
-            <div class="glass-panel p-6 flex justify-between items-center">
-                <div>
-                    <p class="text-gray-400 text-xs font-mono uppercase">Network Status</p>
-                    <h3 class="text-2xl font-black text-green-400 mt-1">SECURE</h3>
-                </div>
-                <i class="fa-solid fa-shield-check text-3xl text-white/10"></i>
-            </div>
-            <div class="glass-panel p-6 flex justify-between items-center border-b-2 border-b-gold">
-                <div>
-                    <p class="text-gray-400 text-xs font-mono uppercase">Total Assets</p>
-                    <h3 class="text-2xl font-black mt-1">10,000<span class="text-gold">+</span></h3>
-                </div>
-                <i class="fa-solid fa-box-open text-3xl text-gold/20"></i>
-            </div>
-            <div class="glass-panel p-6 flex justify-between items-center hidden md:flex">
-                <div>
-                    <p class="text-gray-400 text-xs font-mono uppercase">Active Users</p>
-                    <h3 class="text-2xl font-black mt-1">Real-time</h3>
-                </div>
-                <i class="fa-solid fa-satellite-dish text-3xl text-white/10"></i>
-            </div>
-            <div class="glass-panel p-6 flex justify-between items-center hidden md:flex">
-                <div>
-                    <p class="text-gray-400 text-xs font-mono uppercase">Sys Health</p>
-                    <h3 class="text-2xl font-black text-blue-400 mt-1">99.9%</h3>
-                </div>
-                <i class="fa-solid fa-server text-3xl text-white/10"></i>
-            </div>
-        </div>
-
-        <div class="glass-panel p-8 relative overflow-hidden">
-            <div class="absolute top-0 right-0 w-32 h-32 bg-gold/10 rounded-bl-full blur-2xl"></div>
-            <div class="absolute top-4 right-4 text-[10px] text-gold font-mono tracking-widest opacity-50">TERMINAL // DEPLOYMENT_MODULE</div>
+        <div class="glass-panel p-10 relative overflow-hidden group">
+            <div class="absolute -top-20 -right-20 w-64 h-64 bg-gold/10 rounded-full blur-[100px] pointer-events-none group-hover:bg-gold/15 transition-all"></div>
+            <div class="absolute top-6 right-6 text-[11px] text-gold font-mono tracking-widest opacity-40">TERMINAL // DEPLOYMENT_MODULE</div>
             
-            <h2 class="text-3xl font-black mb-2 uppercase tracking-tighter text-white">Asset <span class="text-gold">Deployment</span> Protocol</h2>
-            <p class="text-gray-400 text-sm mb-8 font-mono">Execute parameters to push new digital products to the live global network.</p>
-
-            <form id="product-form" class="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
+            <form id="product-form" class="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
                 
-                <div class="md:col-span-2 group">
-                    <label class="block text-xs font-mono text-gold mb-2 uppercase tracking-widest"><i class="fa-solid fa-terminal mr-2"></i>Product Identity (Name)</label>
-                    <input type="text" id="p-name" required class="tech-input w-full p-4 rounded-xl text-lg font-bold" placeholder="e.g. Next-Gen AI Automation Script">
+                <div class="md:col-span-2 space-y-6">
+                    <div class="space-y-2">
+                        <label class="block text-xs font-mono text-gold mb-2 uppercase tracking-widest"><i class="fa-solid fa-tag mr-2"></i>Product Identity (Name)</label>
+                        <input type="text" id="p-name" required class="tech-input w-full p-4 rounded-xl text-lg font-bold" placeholder="e.g. Next-Gen Tech MBA bundle + Tech Skills">
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="block text-xs font-mono text-gold mb-2 uppercase tracking-widest"><i class="fa-solid fa-dollar-sign mr-2"></i>Value (USD)</label>
+                            <input type="number" id="p-price" step="0.01" required class="tech-input w-full p-4 rounded-xl font-mono text-lg font-bold" placeholder="0.00">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="block text-xs font-mono text-gold mb-2 uppercase tracking-widest"><i class="fa-solid fa-layer-group mr-2"></i>Classification</label>
+                            <select id="p-category" class="tech-input w-full p-4 rounded-xl font-bold appearance-none cursor-pointer text-sm">
+                                <option class="bg-dark text-white">Source Codes</option>
+                                <option class="bg-dark text-white">Templates</option>
+                                <option class="bg-dark text-white">E-Books</option>
+                                <option class="bg-dark text-white">AI Agents</option>
+                                <option class="bg-dark text-white">Business Blueprints</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
 
-                <div>
-                    <label class="block text-xs font-mono text-gold mb-2 uppercase tracking-widest"><i class="fa-solid fa-dollar-sign mr-2"></i>Value (Price)</label>
-                    <input type="number" id="p-price" step="0.01" required class="tech-input w-full p-4 rounded-xl font-mono text-lg" placeholder="0.00">
+                <div class="space-y-6">
+                    <div class="space-y-2">
+                        <label class="block text-xs font-mono text-gold mb-2 uppercase tracking-widest"><i class="fa-solid fa-image mr-2"></i>Visual Render (URL)</label>
+                        <input type="text" id="p-img" required class="tech-input w-full p-4 rounded-xl text-sm" placeholder="https://images.unsplash.com/...">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="block text-xs font-mono text-gold mb-2 uppercase tracking-widest"><i class="fa-solid fa-id-card mr-2"></i>Status Label</label>
+                        <select id="p-label" class="tech-input w-full p-4 rounded-xl text-sm appearance-none font-bold">
+                            <option value="PRO" class="text-white bg-dark">PRO (Standard)</option>
+                            <option value="FREE" class="text-green-400 bg-dark">FREE</option>
+                            <option value="Elite" class="text-gold bg-dark">Elite Collection</option>
+                            <option value="New" class="text-cyber bg-dark">New Arrival</option>
+                        </select>
+                    </div>
                 </div>
 
-                <div>
-                    <label class="block text-xs font-mono text-gold mb-2 uppercase tracking-widest"><i class="fa-solid fa-layer-group mr-2"></i>Classification</label>
-                    <select id="p-category" class="tech-input w-full p-4 rounded-xl font-bold appearance-none cursor-pointer">
-                        <option class="bg-dark text-white">Source Codes</option>
-                        <option class="bg-dark text-white">Templates</option>
-                        <option class="bg-dark text-white">AI Tools</option>
-                        <option class="bg-dark text-white">E-Books</option>
-                        <option class="bg-dark text-white">Business Blueprints</option>
-                    </select>
+                <div class="md:col-span-3 space-y-2">
+                    <label class="block text-xs font-mono text-gold mb-2 uppercase tracking-widest"><i class="fa-solid fa-align-left mr-2"></i>Deep Description (Detailed Info)</label>
+                    <textarea id="p-desc" required class="tech-input w-full p-4 rounded-xl h-40 resize-none" placeholder="Provide full technical specifications, features, and benefits..."></textarea>
                 </div>
 
-                <div class="md:col-span-2">
-                    <label class="block text-xs font-mono text-gold mb-2 uppercase tracking-widest"><i class="fa-solid fa-code mr-2"></i>Asset Description</label>
-                    <textarea id="p-desc" required class="tech-input w-full p-4 rounded-xl h-32 resize-none" placeholder="Enter deep technical details about the product..."></textarea>
-                </div>
-
-                <div>
-                    <label class="block text-xs font-mono text-gold mb-2 uppercase tracking-widest"><i class="fa-solid fa-image mr-2"></i>Visual Render (Image URL)</label>
-                    <input type="text" id="p-img" required class="tech-input w-full p-4 rounded-xl text-sm" placeholder="https://images.unsplash.com/...">
-                </div>
-
-                <div>
-                    <label class="block text-xs font-mono text-gold mb-2 uppercase tracking-widest"><i class="fa-solid fa-link mr-2"></i>Core Source (Drive Link)</label>
+                <div class="md:col-span-2 space-y-2">
+                    <label class="block text-xs font-mono text-gold mb-2 uppercase tracking-widest"><i class="fa-solid fa-link mr-2"></i>Core Source (Download/Drive Link)</label>
                     <input type="text" id="p-link" required class="tech-input w-full p-4 rounded-xl text-sm" placeholder="https://drive.google.com/...">
                 </div>
+                
+                <div class="space-y-2">
+                    <label class="block text-xs font-mono text-gray-500 mb-2 uppercase tracking-widest"><i class="fa-solid fa-user-tie mr-2"></i>Seller UID</label>
+                    <input type="text" disabled value="UPNETAI_OFFICIAL" class="tech-input w-full p-4 rounded-xl text-sm bg-black/80 text-gray-600 font-bold">
+                </div>
 
-                <div class="md:col-span-2 mt-6">
-                    <button type="submit" id="add-btn" class="w-full relative group overflow-hidden bg-gold text-dark font-black py-5 rounded-xl uppercase tracking-[0.2em] transition-all hover:scale-[1.01] shadow-[0_0_30px_rgba(212,175,55,0.3)]">
-                        <span class="relative z-10 flex items-center justify-center">
+                <div class="md:col-span-3 mt-8 pt-6 border-t border-white/5">
+                    <button type="submit" id="add-btn" class="powerful-btn w-full relative overflow-hidden bg-gold text-dark font-black py-6 rounded-2xl uppercase tracking-[0.3em] transition-all duration-300">
+                        <span class="relative z-10 flex items-center justify-center text-xl tracking-tighter">
                             <i class="fa-solid fa-satellite-dish mr-3 animate-pulse"></i> Initialize Deployment Sequence
                         </span>
-                        <div class="absolute inset-0 h-full w-full bg-white/20 scale-x-0 group-hover:scale-x-100 transform origin-left transition-transform duration-500 ease-out"></div>
+                        
                     </button>
+                    <p class="text-center text-[11px] text-gray-600 font-mono mt-3 uppercase tracking-wider">Product will be pushed to all live matrix nodes instantly upon execution.</p>
                 </div>
             </form>
         </div>
+
+        <div class="glass-panel p-8">
+            <h3 class="text-xl font-bold mb-4 flex items-center text-white uppercase font-mono"><i class="fa-solid fa-terminal text-gold mr-3 animate-pulse"></i> Matrix Activity Log</h3>
+            <div id="activity-log" class="h-40 overflow-y-auto font-mono text-[11px] text-gray-400 space-y-1.5 p-4 bg-black/60 rounded-xl border border-white/5">
+                <p><span class="text-gray-600">[...0001]</span> UPNETAI Admin Terminal initialized.</p>
+                <p><span class="text-gray-600">[...0002]</span> Fetching user authorization hash...</p>
+            </div>
+        </div>
+
     </main>
 
     <script type="module">
@@ -227,6 +292,7 @@
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-auth.js";
         import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
 
+        // 🔥 UPNETAI Firebase Configuration v2.0
         const firebaseConfig = {
             apiKey: "AIzaSyD5CZZGOr37cwjbNOFAwEK0XdVg-_P0vUw",
             authDomain: "upnetai-pletform.firebaseapp.com",
@@ -240,68 +306,123 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // Security Core
+        // Security Core Logic (Only Vinay Access)
         const ADMIN_EMAIL = "vinay724063@gmail.com"; 
+        
+        // Rolling Code Cipher Logic
+        const alphabet = "ABCDEF0123456789";
+        setInterval(() => {
+            const cipherLine = document.getElementById("rolling-cipher");
+            if(cipherLine) {
+                let code = "";
+                for(let i=0; i<8; i++) code += alphabet[Math.floor(Math.random()*alphabet.length)];
+                cipherLine.innerText = `SYS_HASH_CHECK // ${code}`;
+            }
+        }, 80);
 
+        // Authorization Engine
         onAuthStateChanged(auth, (user) => {
             const gate = document.getElementById("admin-gate");
             const authError = document.getElementById("auth-error");
 
             if (user && user.email === ADMIN_EMAIL) {
-                // Access Granted Animation
-                gate.style.opacity = '0';
-                setTimeout(() => { gate.classList.add("hidden"); }, 500);
+                // ACCESS GRANTED Animation
+                addToLog(`SYSTEM OVERRIDE: Admin authorized.`);
+                addToLog(`Welcome CEO Vinay. Matrix is yours.`);
+                
+                gate.classList.add("scale-110", "opacity-0");
+                setTimeout(() => { 
+                    gate.classList.add("hidden");
+                }, 700);
                 
                 Toastify({ 
-                    text: "SYSTEM OVERRIDE: Admin Vinay logged in.", 
-                    duration: 3000, gravity: "bottom", position: "right",
-                    style: { background: "#d4af37", color: "#000", fontWeight: "bold", borderRadius: "8px" }
+                    text: "SYSTEM INITIALIZED: Welcome, CEO Vinay.", 
+                    duration: 5000, gravity: "bottom", position: "right",
+                    style: { background: "linear-gradient(to right, #b8860b, #d4af37)", color: "#000", fontWeight: "900", borderRadius: "12px", boxShadow: "0 0 20px rgba(212,175,55,0.5)" }
                 }).showToast();
+
+                initSysTime(); // System time load
+
             } else {
-                // Access Denied
-                gate.querySelector('h1').classList.add('hidden');
-                gate.querySelector('p').classList.add('hidden');
-                gate.querySelector('.relative').classList.add('hidden');
-                authError.classList.remove('hidden');
-                authError.classList.add('flex');
+                // ACCESS DENIED Animation
+                addToLog(`Unauthorized access detected. Initializing lockdown.`, true);
+                gate.querySelector('.animate-pulse').classList.remove('text-[#d4af37]');
+                gate.querySelector('.animate-pulse').classList.add('text-red-500');
+                
+                setTimeout(() => {
+                    gate.querySelector('h1').classList.add('hidden');
+                    gate.querySelector('p').classList.add('hidden');
+                    gate.querySelector('.relative').classList.add('hidden');
+                    authError.classList.remove('hidden');
+                    authError.classList.add('flex');
+                }, 1500);
             }
         });
 
-        // Deployment Logic (Add Product)
+        // Product Deployment Logic
         const form = document.getElementById("product-form");
+        const log = document.getElementById("activity-log");
+
+        function addToLog(message, isError = false) {
+            const timeStr = `[...${log.children.length.toString().padStart(4, '0')}]`;
+            const colorClass = isError ? "text-red-500" : (message.includes("DEPLOYED") ? "text-gold" : "text-gray-400");
+            log.innerHTML += `<p><span class="text-gray-600">${timeStr}</span> <span class="${colorClass}">${message}</span></p>`;
+            log.scrollTop = log.scrollHeight; // Auto scroll
+        }
+
         form.addEventListener("submit", async (e) => {
             e.preventDefault();
             const btn = document.getElementById("add-btn");
-            const originalText = btn.innerHTML;
+            const originalBtnHtml = btn.innerHTML;
             
-            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-3"></i> Uploading to Matrix...`;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-3"></i> Synchronizing with Matrix...`;
             btn.disabled = true;
+            btn.classList.add("opacity-60");
+            
+            const pName = document.getElementById("p-name").value;
+            addToLog(`Deployment Sequence Initiated: ${pName}`);
 
             try {
+                // Publish to Firestore "products" collection
                 await addDoc(collection(db, "products"), {
-                    name: document.getElementById("p-name").value,
+                    name: pName,
                     price: parseFloat(document.getElementById("p-price").value),
                     category: document.getElementById("p-category").value,
+                    label: document.getElementById("p-label").value,
                     description: document.getElementById("p-desc").value,
                     image: document.getElementById("p-img").value,
                     link: document.getElementById("p-link").value,
                     createdAt: serverTimestamp()
                 });
 
+                addToLog(`ASSET DEPLOYED SUCCESS: "${pName}" is live!`);
+
                 Toastify({ 
-                    text: "✔️ ASSET DEPLOYED SUCCESSFULLY TO MAIN SERVER", 
-                    duration: 4000, gravity: "top", position: "right",
-                    style: { background: "linear-gradient(to right, #00b09b, #96c93d)", border: "1px solid #fff", borderRadius: "10px", fontWeight: "bold" }
+                    text: `✔ ASSET PUSHED LIVE: ${pName}`, 
+                    duration: 5000, gravity: "top", position: "right",
+                    style: { background: "linear-gradient(to right, #00b09b, #96c93d)", borderRadius: "10px", fontWeight: "bold" }
                 }).showToast();
                 
                 form.reset();
             } catch (error) {
-                Toastify({ text: "ERROR: " + error.message, style: { background: "#ff0000" } }).showToast();
+                addToLog(`DEPLOYMENT ERROR: ${error.message}`, true);
+                alert("Matrix Sync Error: " + error.message);
             } finally {
-                btn.innerHTML = originalText;
+                btn.innerHTML = originalBtnHtml;
                 btn.disabled = false;
+                btn.classList.remove("opacity-60");
             }
         });
+
+        // Real-time System Time
+        function initSysTime() {
+            setInterval(() => {
+                const now = new Date();
+                const timeStr = `SYNC_TIME // ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
+                document.getElementById("system-time").innerText = timeStr;
+            }, 1000);
+        }
+
     </script>
 </body>
 </html>
